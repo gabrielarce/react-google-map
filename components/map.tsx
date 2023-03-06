@@ -18,7 +18,7 @@ export default function Map() {
   const [directions, setDirections] = useState<DirectionsResult>();
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(
-    () => ({ lat: 43.45, lng: -80.49 }),
+    () => ({ lat: 34.05, lng: -118.24 }),
     []
   );
   const options = useMemo<MapOptions>(
