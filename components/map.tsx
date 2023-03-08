@@ -44,6 +44,7 @@ export default function Map() {
       },
       (result, status) => {
         if (status === "OK" && result) {
+          console.log(result);
           setDirections(result);
         }
       }
