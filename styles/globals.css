@@ -50,3 +50,11 @@ a {
   width: 100%;
   padding: 0.5rem;
 }
+
+/* Phone Screen */
+
+@media only screen and (max-width: 768px) {
+  .controls {
+    width: 100%;
+  }
+}
