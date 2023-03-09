@@ -7,6 +7,7 @@ import {
   MarkerClusterer,
 } from "@react-google-maps/api";
 import Places from "./places";
+import Homes from "./homes";
 import Distance from "./distance";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
@@ -15,6 +16,7 @@ type MapOptions = google.maps.MapOptions;
 
 export default function Map() {
   const [office, setOffice] = useState<LatLngLiteral>();
+  const [homes, setHomes] = useState<Array<LatLngLiteral>>([]);
   const [directions, setDirections] = useState<DirectionsResult>();
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(
@@ -30,7 +32,7 @@ export default function Map() {
     []
   );
   const onLoad = useCallback((map) => (mapRef.current = map), []);
-  const houses = useMemo(() => generateHouses(center), [center]);
+  // const houses = useMemo(() => generateHouses(center), [center]);
 
   const fetchDirections = (house: LatLngLiteral) => {
     if (!office) return;
@@ -54,7 +56,7 @@ export default function Map() {
   return (
     <div className="container">
       <div className="controls">
-        <h1>Commute?</h1>
+        <h1>Commute Cost Calculator</h1>
         <Places
           setOffice={(position) => {
             setOffice(position);
@@ -63,6 +65,11 @@ export default function Map() {
         />
         {!office && <p>Enter the address of your office.</p>}
         {directions && <Distance leg={directions.routes[0].legs[0]} />}
+        <Homes
+          setHomes={(position) => {
+            setHomes([...homes, position]);
+          }}
+        />
       </div>
       <div className="map">
         <GoogleMap
@@ -92,7 +99,7 @@ export default function Map() {
                 icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
               />
 
-              <MarkerClusterer>
+              {/* <MarkerClusterer>
                 {(clusterer) =>
                   houses.map((house) => (
                     <Marker
@@ -105,7 +112,7 @@ export default function Map() {
                     />
                   ))
                 }
-              </MarkerClusterer>
+              </MarkerClusterer> */}
 
               <Circle center={office} radius={15000} options={closeOptions} />
               <Circle center={office} radius={30000} options={middleOptions} />
