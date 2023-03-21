@@ -16,7 +16,9 @@ type MapOptions = google.maps.MapOptions;
 
 export default function Map() {
   const [office, setOffice] = useState<LatLngLiteral>();
-  const [homes, setHomes] = useState<Array<LatLngLiteral>>([]);
+  const [officeAlias, setOfficeAlias] = useState<string | null>(null);
+  const [homes, setHomes] = useState<Array<string>>([]);
+  const [homesCoords, setHomesCoords] = useState<Array<LatLngLiteral>>([]);
   const [directions, setDirections] = useState<DirectionsResult>();
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(
@@ -32,7 +34,7 @@ export default function Map() {
     []
   );
   const onLoad = useCallback((map) => (mapRef.current = map), []);
-  // const houses = useMemo(() => generateHouses(center), [center]);
+  const houses = useMemo(() => homesCoords, [homesCoords]);
 
   const fetchDirections = (house: LatLngLiteral) => {
     if (!office) return;
@@ -52,24 +54,49 @@ export default function Map() {
       }
     );
   };
-
+  console.log(homes);
+  console.log(homesCoords);
   return (
     <div className="container">
       <div className="controls">
         <h1>Commute Cost Calculator</h1>
+        <h4>Office Location</h4>
         <Places
           setOffice={(position) => {
             setOffice(position);
             mapRef.current?.panTo(position);
           }}
+          setOfficeAlias={(address) => {
+            setOfficeAlias(address);
+          }}
         />
         {!office && <p>Enter the address of your office.</p>}
+        {officeAlias && (
+          <div>
+            <p>Office Address:</p>
+            <p>{officeAlias}</p>
+          </div>
+        )}
+
         {directions && <Distance leg={directions.routes[0].legs[0]} />}
+        <h4>Homes Locations</h4>
         <Homes
           setHomes={(position) => {
             setHomes([...homes, position]);
           }}
+          setHomesCoords={(position) => {
+            setHomesCoords([...homesCoords, position]);
+          }}
         />
+        {homes && (
+          <div>
+            <ul>
+              {homes.map((h, i) => (
+                <li key={i}> {h}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <div className="map">
         <GoogleMap
@@ -94,12 +121,9 @@ export default function Map() {
 
           {office && (
             <>
-              <Marker
-                position={office}
-                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-              />
+              <Marker position={office} icon="../public/beachflag.png" />
 
-              {/* <MarkerClusterer>
+              <MarkerClusterer>
                 {(clusterer) =>
                   houses.map((house) => (
                     <Marker
@@ -112,7 +136,7 @@ export default function Map() {
                     />
                   ))
                 }
-              </MarkerClusterer> */}
+              </MarkerClusterer>
 
               <Circle center={office} radius={15000} options={closeOptions} />
               <Circle center={office} radius={30000} options={middleOptions} />
@@ -153,16 +177,4 @@ const farOptions = {
   fillOpacity: 0.05,
   strokeColor: "#FF5252",
   fillColor: "#FF5252",
-};
-
-const generateHouses = (position: LatLngLiteral) => {
-  const _houses: Array<LatLngLiteral> = [];
-  for (let i = 0; i < 100; i++) {
-    const direction = Math.random() < 0.5 ? -2 : 2;
-    _houses.push({
-      lat: position.lat + Math.random() / direction,
-      lng: position.lng + Math.random() / direction,
-    });
-  }
-  return _houses;
 };

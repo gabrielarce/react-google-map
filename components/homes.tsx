@@ -12,10 +12,11 @@ import {
 import "@reach/combobox/styles.css";
 
 type PlacesProps = {
-  setHomes: (position: google.maps.LatLngLiteral) => void;
+  setHomes: (address: string) => void;
+  setHomesCoords: (position: google.maps.LatLngLiteral) => void;
 };
 
-export default function Homes({ setHomes }: PlacesProps) {
+export default function Homes({ setHomes, setHomesCoords }: PlacesProps) {
   const {
     ready,
     value,
@@ -30,8 +31,8 @@ export default function Homes({ setHomes }: PlacesProps) {
 
     const results = await getGeocode({ address: val });
     const { lat, lng } = await getLatLng(results[0]);
-    const newHome = { lat, lng };
-    setHomes(newHome);
+    setHomes(val);
+    setHomesCoords({ lat, lng });
   };
 
   return (
@@ -41,7 +42,7 @@ export default function Homes({ setHomes }: PlacesProps) {
         onChange={(e) => setValue(e.target.value)}
         disabled={!ready}
         className="combobox-input"
-        placeholder="Search office address"
+        placeholder="Search homes address"
       />
       <ComboboxPopover>
         <ComboboxList>
