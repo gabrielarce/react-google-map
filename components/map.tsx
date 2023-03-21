@@ -54,8 +54,7 @@ export default function Map() {
       }
     );
   };
-  console.log(homes);
-  console.log(homesCoords);
+
   return (
     <div className="container">
       <div className="controls">
@@ -93,7 +92,6 @@ export default function Map() {
             <ul>
               {homes.map((h, i) => (
                 <li key={i} className="homesAddress">
-                  {" "}
                   {h}
                 </li>
               ))}
@@ -124,7 +122,10 @@ export default function Map() {
 
           {office && (
             <>
-              <Marker position={office} icon="../public/beachflag.png" />
+              <Marker
+                position={office}
+                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+              />
 
               <MarkerClusterer>
                 {(clusterer) =>

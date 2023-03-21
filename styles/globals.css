@@ -4,7 +4,6 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  height: 100vh;
 }
 
 a {
@@ -19,6 +18,7 @@ a {
 .container {
   display: flex;
   height: 100vh;
+  flex-wrap: wrap;
 }
 
 .controls {
@@ -54,6 +54,7 @@ a {
 
 .officeAddress {
   border: 1px solid #dd137b;
+  background: #dd137b2e;
   padding: 5% 3%;
 }
 
@@ -64,6 +65,7 @@ ul {
 .homesAddress {
   list-style-type: none;
   border: 1px solid aqua;
+  background: #00ffff36;
   padding: 5% 3%;
   margin: 0.5rem 0;
 }
