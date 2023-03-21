@@ -73,12 +73,12 @@ export default function Map() {
         {!office && <p>Enter the address of your office.</p>}
         {officeAlias && (
           <div>
-            <p>Office Address:</p>
-            <p>{officeAlias}</p>
+            <p className="officeAddress">{officeAlias}</p>
           </div>
         )}
 
         {directions && <Distance leg={directions.routes[0].legs[0]} />}
+        <hr />
         <h4>Homes Locations</h4>
         <Homes
           setHomes={(position) => {
@@ -92,7 +92,10 @@ export default function Map() {
           <div>
             <ul>
               {homes.map((h, i) => (
-                <li key={i}> {h}</li>
+                <li key={i} className="homesAddress">
+                  {" "}
+                  {h}
+                </li>
               ))}
             </ul>
           </div>

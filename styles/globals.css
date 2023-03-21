@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  height: 100vh;
 }
 
 a {
@@ -49,6 +50,27 @@ a {
 .combobox-input {
   width: 100%;
   padding: 0.5rem;
+}
+
+.officeAddress {
+  border: 1px solid #dd137b;
+  padding: 5% 3%;
+}
+
+ul {
+  padding: 0;
+}
+
+.homesAddress {
+  list-style-type: none;
+  border: 1px solid aqua;
+  padding: 5% 3%;
+  margin: 0.5rem 0;
+}
+
+hr {
+  border: 1px solid aqua;
+  margin: 2rem 0;
 }
 
 /* Phone Screen */
