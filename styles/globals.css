@@ -78,6 +78,6 @@ hr {
 
 @media only screen and (max-width: 768px) {
   .controls {
-    width: 100%;
+    width: 50%;
   }
 }
