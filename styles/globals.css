@@ -1,83 +1,128 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .container {
-  display: flex;
-  height: 100vh;
+    display: flex;
+    height: 100vh;
 }
 
 .controls {
-  width: 20%;
-  padding: 1rem;
-  background: #14161a;
-  color: #fff;
+    width: 25%;
+    padding: 1rem;
+    background: #14161a;
+    color: #fff;
+    overflow: auto;
 }
 
 .controls input {
-  border: none;
+    border: none;
 }
 
 .map-container {
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: 100vh;
 }
 
 .map {
-  width: 80%;
-  height: 100vh;
+    width: 80%;
+    height: 100vh;
 }
 
 .highlight {
-  font-size: 1.25rem;
-  font-weight: bold;
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 
 .combobox-input {
-  width: 100%;
-  padding: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
 }
 
 .officeAddress {
-  border: 1px solid #dd137b;
-  background: #dd137b2e;
-  padding: 5% 3%;
+    border: 1px solid #dd137b;
+    background: #dd137b2e;
+    padding: 5% 3%;
 }
 
 ul {
-  padding: 0;
+    padding: 0;
 }
 
 .homesAddress {
-  list-style-type: none;
-  border: 1px solid aqua;
-  background: #00ffff36;
-  padding: 5% 3%;
-  margin: 0.5rem 0;
+    list-style-type: none;
+    border: 1px solid aqua;
+    background: #00ffff36;
+    padding: 5% 3%;
+    margin: 0.5rem 0;
+}
+
+.homesAddress:hover {
+    cursor: pointer;
 }
 
 hr {
-  border: 1px solid aqua;
-  margin: 2rem 0;
+    border: 1px solid aqua;
+    margin: 2rem 0;
 }
+
 
 /* Phone Screen */
 
 @media only screen and (max-width: 768px) {
-  .controls {
-    width: 50%;
-  }
+    .controls {
+        width: 50%;
+    }
+}
+
+
+/* Animations  */
+
+.box {
+    animation-duration: 1.75s;
+    transform-origin: bottom;
+    width: auto;
+}
+
+.bounce-6 {
+    animation-name: bounce-6;
+    animation-timing-function: ease;
+    animation-iteration-count: 2;
+}
+
+@keyframes bounce-6 {
+    0% {
+        transform: scale(1, 1) translateY(0);
+    }
+    10% {
+        transform: scale(1.1, 0.9) translateY(0);
+    }
+    30% {
+        transform: scale(0.9, 1.1) translateY(-20px);
+    }
+    50% {
+        transform: scale(1.05, 0.95) translateY(0);
+        color: rgb(255, 251, 0);
+    }
+    57% {
+        transform: scale(1, 1) translateY(-7px);
+    }
+    64% {
+        transform: scale(1, 1) translateY(0);
+    }
+    100% {
+        transform: scale(1, 1) translateY(0);
+    }
 }

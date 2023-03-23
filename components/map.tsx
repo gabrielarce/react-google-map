@@ -28,7 +28,7 @@ export default function Map() {
   const options = useMemo<MapOptions>(
     () => ({
       mapId: "b181cac70f27f5e6",
-      disableDefaultUI: true,
+      disableDefaultUI: false,
       clickableIcons: false,
     }),
     []
@@ -45,6 +45,9 @@ export default function Map() {
         origin: house,
         destination: office,
         travelMode: google.maps.TravelMode.DRIVING,
+        drivingOptions: {
+          departureTime: tomorrow,
+        },
       },
       (result, status) => {
         if (status === "OK" && result) {
@@ -69,7 +72,11 @@ export default function Map() {
             setOfficeAlias(address);
           }}
         />
-        {!office && <p>Enter the address of your office.</p>}
+        {!office && (
+          <div className="box bounce-6">
+            <p>Enter the address of your office.</p>
+          </div>
+        )}
         {officeAlias && (
           <div>
             <p className="officeAddress">{officeAlias}</p>
@@ -91,7 +98,11 @@ export default function Map() {
           <div>
             <ul>
               {homes.map((h, i) => (
-                <li key={i} className="homesAddress">
+                <li
+                  key={i}
+                  className="homesAddress"
+                  onClick={() => fetchDirections(homesCoords[i])}
+                >
                   {h}
                 </li>
               ))}
@@ -182,3 +193,10 @@ const farOptions = {
   strokeColor: "#FF5252",
   fillColor: "#FF5252",
 };
+
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+tomorrow.setHours(8);
+tomorrow.setMinutes(0);
+tomorrow.setSeconds(0);
+tomorrow.setMilliseconds(0);
