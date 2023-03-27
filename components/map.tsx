@@ -15,6 +15,7 @@ type DirectionsResult = google.maps.DirectionsResult;
 type MapOptions = google.maps.MapOptions;
 
 export default function Map() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [office, setOffice] = useState<LatLngLiteral>();
   const [officeAlias, setOfficeAlias] = useState<string | null>(null);
   const [homes, setHomes] = useState<Array<string>>([]);
@@ -33,6 +34,10 @@ export default function Map() {
     }),
     []
   );
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   const onLoad = useCallback((map) => (mapRef.current = map), []);
   const houses = useMemo(() => homesCoords, [homesCoords]);
 
@@ -61,55 +66,61 @@ export default function Map() {
   return (
     <div className="container">
       <div className="controls">
-        <h1>Commute Cost Calculator</h1>
-        <h4>Office Location</h4>
-        <Places
-          setOffice={(position) => {
-            setOffice(position);
-            mapRef.current?.panTo(position);
-          }}
-          setOfficeAlias={(address) => {
-            setOfficeAlias(address);
-          }}
-        />
-        {!office && (
-          <div className="box bounce-6">
-            <p>Enter the address of your office.</p>
-          </div>
-        )}
-        {officeAlias && (
-          <div>
-            <p className="officeAddress">{officeAlias}</p>
-          </div>
-        )}
+        <div className={`interface ${isMenuOpen ? "closed" : ""}`}>
+          <h1>Commute Cost Calculator</h1>
+          <h4>Office Location</h4>
+          <Places
+            setOffice={(position) => {
+              setOffice(position);
+              mapRef.current?.panTo(position);
+            }}
+            setOfficeAlias={(address) => {
+              setOfficeAlias(address);
+            }}
+          />
+          {!office && (
+            <div className="box bounce-6">
+              <p>Enter the address of your office.</p>
+            </div>
+          )}
+          {officeAlias && (
+            <div>
+              <p className="officeAddress">{officeAlias}</p>
+            </div>
+          )}
 
-        {directions && <Distance leg={directions.routes[0].legs[0]} />}
-        <hr />
-        <h4>Homes Locations</h4>
-        <Homes
-          setHomes={(position) => {
-            setHomes([...homes, position]);
-          }}
-          setHomesCoords={(position) => {
-            setHomesCoords([...homesCoords, position]);
-          }}
-        />
-        {homes && (
-          <div>
-            <ul>
-              {homes.map((h, i) => (
-                <li
-                  key={i}
-                  className="homesAddress"
-                  onClick={() => fetchDirections(homesCoords[i])}
-                >
-                  {h}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          {directions && <Distance leg={directions.routes[0].legs[0]} />}
+          <hr />
+          <h4>Homes Locations</h4>
+          <Homes
+            setHomes={(position) => {
+              setHomes([...homes, position]);
+            }}
+            setHomesCoords={(position) => {
+              setHomesCoords([...homesCoords, position]);
+            }}
+          />
+          {homes && (
+            <div>
+              <ul>
+                {homes.map((h, i) => (
+                  <li
+                    key={i}
+                    className="homesAddress"
+                    onClick={() => fetchDirections(homesCoords[i])}
+                  >
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+        <div className="tab" onClick={toggleMenu}>
+          {isMenuOpen ? ">" : "<"}
+        </div>
       </div>
+
       <div className="map">
         <GoogleMap
           zoom={10}
